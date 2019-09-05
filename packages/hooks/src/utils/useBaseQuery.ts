@@ -43,10 +43,17 @@ export function useBaseQuery<TData = any, TVariables = OperationVariables>(
     memo
   );
 
-  useEffect(() => queryData.afterExecute({ lazy }), [result]);
+  useEffect(() => {
+    if (queryDataRef.current) {
+      queryData.afterExecute({ lazy });
+    }
+  }, [result]);
 
   useEffect(() => {
-    return () => queryData.cleanup();
+    return () => {
+      queryData.cleanup();
+      queryDataRef.current = undefined;
+    };
   }, []);
 
   return result;
