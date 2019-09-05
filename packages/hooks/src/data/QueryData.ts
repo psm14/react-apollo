@@ -414,29 +414,31 @@ export class QueryData<TData, TVariables> extends OperationData {
   }
 
   private handleErrorOrCompleted() {
-    const {
-      data,
-      loading,
-      error
-    } = this.currentObservable.query!.getCurrentResult();
+    if (this.currentObservable.query) {
+      const {
+        data,
+        loading,
+        error
+      } = this.currentObservable.query!.getCurrentResult();
 
-    if (!loading) {
-      const { query, variables, onCompleted, onError } = this.getOptions();
+      if (!loading) {
+        const { query, variables, onCompleted, onError } = this.getOptions();
 
-      // No changes, so we won't call onError/onCompleted.
-      if (
-        this.previousOptions &&
-        !this.previousData.loading &&
-        isEqual(this.previousOptions.query, query) &&
-        isEqual(this.previousOptions.variables, variables)
-      ) {
-        return;
-      }
+        // No changes, so we won't call onError/onCompleted.
+        if (
+          this.previousOptions &&
+          !this.previousData.loading &&
+          isEqual(this.previousOptions.query, query) &&
+          isEqual(this.previousOptions.variables, variables)
+        ) {
+          return;
+        }
 
-      if (onCompleted && !error) {
-        onCompleted(data);
-      } else if (onError && error) {
-        onError(error);
+        if (onCompleted && !error) {
+          onCompleted(data);
+        } else if (onError && error) {
+          onError(error);
+        }
       }
     }
   }
