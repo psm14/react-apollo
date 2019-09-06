@@ -1,5 +1,5 @@
 {
-  "name": "@apollo/react-hooks",
+  "name": "apollo-hooks",
   "description": "React Apollo Hooks.",
   "version": "3.1.0-beta.0",
   "author": "opensource@apollographql.com",
